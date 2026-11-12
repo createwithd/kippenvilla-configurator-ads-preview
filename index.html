@@ -31,7 +31,7 @@ header{display:grid;gap:14px;padding-bottom:22px;border-bottom:1px solid var(--l
 h1{font:800 clamp(28px,4.4vw,44px)/1.08 var(--display);color:var(--petrol);margin:0;text-wrap:balance}
 .lead{max-width:68ch;color:var(--muted);margin:0}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:6px}
-.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px}
+.seg{justify-self:center;display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px}
 .seg button{font:600 14px var(--body);border:0;background:transparent;color:var(--ink);padding:8px 16px;border-radius:999px;cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--petrol);color:var(--surface)}
 .seg button:focus-visible,.uitleg-btn:focus-visible,.phone:focus-visible{outline:3px solid var(--goud);outline-offset:2px}
@@ -71,10 +71,6 @@ footer{margin-top:40px;color:var(--muted);font-size:13px;max-width:75ch}
     <h1>Video-ads voor de hooiberg-configurator</h1>
     <p class="lead">Twaalf video's die mensen naar kippenvilla.nl/pages/hooiberg-configurator sturen. Elke ad draait om zelf samenstellen. Beeld komt uit de renders van de configurator, echte klantfoto's en eigen YouTube-video's van Kippenvilla. Geen AI-beeld en geen voice-over.</p>
     <div class="bar">
-      <div class="seg" role="group" aria-label="Formaat">
-        <button type="button" id="f45" aria-pressed="true" data-fmt="45">Feed 4:5</button>
-        <button type="button" id="f916" aria-pressed="false" data-fmt="916">Story 9:16</button>
-      </div>
       <div class="facts"><span>Test: 01, 04, 08</span><span>9 reserve</span><span>Feed + story</span><span>14–16 sec</span><span>Prijs in 1 ad</span><span>Muziek toevoegen in Ads Manager</span></div>
     </div>
   </header>
@@ -165,7 +161,7 @@ const ADS = [
   hook:'YouTube Kippenvilla: "Kippenhok Hooiberg Bouwpakket: zo zet je \'m in 18 minuten in elkaar" (22.000 weergaven).'},
 ];
 
-let fmt = '45';
+let fmt = "45";
 try { const v = localStorage.getItem('kv-fmt'); if (v === '45' || v === '916') fmt = v; } catch (e) {}
 
 function el(tag, cls, txt){ const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
@@ -185,11 +181,24 @@ function render(){
       const top = el('div', 'ad-top'); top.append(el('span', 'nr', 'AD ' + String(a.nr).padStart(2, '0')));
       if (a.prijs) top.append(el('span', 'prijs', 'met prijs'));
       card.append(top, el('h3', null, a.titel));
-      const src = `video/${a.f}-${fmt}.mp4`;
-      const ph = el('button', 'phone'); ph.type = 'button'; ph.setAttribute('aria-label', 'Bekijk ' + a.titel + ' groot'); ph.dataset.src = src;
-      const v = document.createElement('video'); v.src = src; v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.preload = 'metadata';
-      ph.append(v, el('span', 'fmt', fmt === '45' ? '4:5' : '9:16'));
-      card.append(ph);
+      const ph = el('button', 'phone'); ph.type = 'button'; ph.setAttribute('aria-label', 'Bekijk ' + a.titel + ' groot');
+      const v = document.createElement('video'); v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.preload = 'metadata';
+      const badge = el('span', 'fmt');
+      ph.append(v, badge);
+      // formaatwissel per ad
+      const seg = el('div', 'seg'); seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', 'Formaat ' + a.titel);
+      const zet = f => {
+        const src = `video/${a.f}-${f}.mp4`;
+        v.src = src; ph.dataset.src = src; badge.textContent = f === '45' ? '4:5' : '9:16';
+        v.play().catch(() => {});
+        seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fmt === f)));
+      };
+      for (const [f, lab] of [['45', 'Feed 4:5'], ['916', 'Story 9:16']]){
+        const b = el('button', null, lab); b.type = 'button'; b.dataset.fmt = f;
+        b.addEventListener('click', () => zet(f)); seg.append(b);
+      }
+      card.append(seg, ph);
+      zet(fmt);
       const meta = el('div', 'meta');
       meta.append(el('span', 'lbl', 'Primaire tekst'), el('div', 'tekst', a.tekst), el('span', 'lbl', 'Kop'), el('div', 'kop', a.kop), el('span', 'lbl', 'Knop'), el('span', 'knop', a.knop));
       card.append(meta);
@@ -206,13 +215,6 @@ function render(){
   }
 }
 
-document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
-  fmt = b.dataset.fmt;
-  document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-  try { localStorage.setItem('kv-fmt', fmt); } catch (e) {}
-  render();
-}));
-document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.fmt === fmt)));
 
 const dlg = document.getElementById('groot'), gv = document.getElementById('grootvid');
 document.getElementById('lijst').addEventListener('click', e => {
