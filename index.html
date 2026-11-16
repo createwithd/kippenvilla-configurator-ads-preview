@@ -1,234 +1,223 @@
-<!doctype html>
-<html lang="nl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
-<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img,video{max-width:100%}[hidden]{display:none!important}</style>
-</head>
-<body>
-<title>Hooiberg-configurator video-ads</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap">
-<style>
-/* Layout: kop met formaatwissel, daaronder een raster telefoons; per ad de Meta-teksten en een uitklapbare uitleg. */
-:root{
-  --bg:#f3efe8; --surface:#ffffff; --ink:#1f2a2e; --muted:#5f676a; --line:#ddd5c9;
-  --petrol:#094a60; --petrol-soft:#e3edf0; --goud:#ae8c4c; --terra:#bf7f5c; --phone:#16191b;
-  --display:"Montserrat",system-ui,sans-serif; --body:"Poppins",system-ui,sans-serif;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#101a1e; --surface:#172429; --ink:#eef1f1; --muted:#a2adb0; --line:#2a3a40;
-  --petrol:#7fc3d8; --petrol-soft:#1d3640; --goud:#d2b47a; --terra:#e09b77; --phone:#000; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#101a1e; --surface:#172429; --ink:#eef1f1; --muted:#a2adb0; --line:#2a3a40;
-  --petrol:#7fc3d8; --petrol-soft:#1d3640; --goud:#d2b47a; --terra:#e09b77; --phone:#000; color-scheme:dark}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55}
-.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
-header{display:grid;gap:14px;padding-bottom:22px;border-bottom:1px solid var(--line)}
-.eyebrow{font:600 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--goud)}
-h1{font:800 clamp(28px,4.4vw,44px)/1.08 var(--display);color:var(--petrol);margin:0;text-wrap:balance}
-.lead{max-width:68ch;color:var(--muted);margin:0}
-.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:6px}
-.seg{justify-self:center;display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px}
-.seg button{font:600 14px var(--body);border:0;background:transparent;color:var(--ink);padding:8px 16px;border-radius:999px;cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--petrol);color:var(--surface)}
-.seg button:focus-visible,.uitleg-btn:focus-visible,.phone:focus-visible{outline:3px solid var(--goud);outline-offset:2px}
-.facts{display:flex;flex-wrap:wrap;gap:8px;font-size:13px;color:var(--muted)}
-.facts span{background:var(--petrol-soft);color:var(--petrol);padding:4px 10px;border-radius:999px;font-weight:500}
-.groep{margin-top:34px}
-.groep h2{font:700 20px/1.2 var(--display);margin:0 0 4px;color:var(--ink)}
-.groep p.sub{margin:0 0 16px;color:var(--muted);font-size:14px;max-width:70ch}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
-.ad{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:12px;align-content:start;min-width:0}
-.ad-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-.nr{font:800 13px var(--display);color:var(--goud);letter-spacing:.06em}
-.ad h3{font:700 16px/1.3 var(--display);margin:0;color:var(--petrol)}
-.phone{position:relative;background:var(--phone);border-radius:30px;padding:9px;cursor:zoom-in;border:0;display:block;width:100%;max-width:300px;margin:0 auto}
-.phone video{display:block;width:100%;border-radius:22px;background:#000}
-.phone .fmt{position:absolute;top:16px;right:16px;font:600 11px var(--body);background:rgba(0,0,0,.55);color:#fff;padding:3px 8px;border-radius:999px}
-.meta{display:grid;gap:6px;font-size:13.5px}
-.meta .lbl{font:600 11px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.meta .tekst{white-space:pre-line}
-.meta .kop{font-weight:600}
-.knop{justify-self:start;background:var(--petrol-soft);color:var(--petrol);font-weight:600;font-size:13px;padding:4px 12px;border-radius:8px}
-.uitleg-btn{justify-self:start;font:600 13px var(--body);background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
-.uitleg{display:grid;gap:8px;font-size:13.5px;background:var(--bg);border-radius:12px;padding:12px 14px}
-.uitleg b{color:var(--petrol)}
-.prijs{color:var(--terra);font-weight:600}
-dialog{border:0;padding:0;background:transparent;max-width:min(92vw,520px)}
-dialog::backdrop{background:rgba(5,15,18,.86)}
-dialog video{display:block;max-height:88vh;max-width:100%;border-radius:18px;margin:0 auto}
-dialog .sluit{position:absolute;top:8px;right:8px;font:600 14px var(--body);background:#fff;color:#111;border:0;border-radius:999px;padding:6px 12px;cursor:pointer}
-footer{margin-top:40px;color:var(--muted);font-size:13px;max-width:75ch}
-@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
-</style>
-
-<div class="wrap">
-  <header>
-    <div class="eyebrow">Kippenvilla · Meta-ads · november 2026</div>
-    <h1>Video-ads voor de hooiberg-configurator</h1>
-    <p class="lead">Twaalf video's die mensen naar kippenvilla.nl/pages/hooiberg-configurator sturen. Elke ad draait om zelf samenstellen. Beeld komt uit de renders van de configurator, echte klantfoto's en eigen YouTube-video's van Kippenvilla. Geen AI-beeld en geen voice-over.</p>
-    <div class="bar">
-      <div class="facts"><span>Test: 01, 04, 08</span><span>9 reserve</span><span>Feed + story</span><span>14–16 sec</span><span>Prijs in 1 ad</span><span>Muziek toevoegen in Ads Manager</span></div>
-    </div>
-  </header>
-  <main id="lijst"></main>
-  <footer>
-    Klik op een telefoon voor groot. De video's hebben een stil geluidsspoor: kies in Meta Ads Manager een nummer uit de muziekbibliotheek van Meta. Ad 4 is de enige met een prijs ("vanaf € 2.829", de prijs van Vera in de configurator). Op de schermopnames van de configurator (ad 9 en 10) zijn de optieprijzen weggehaald. Zet bij elke ad "Advertenties van meerdere adverteerders" uit.
-  </footer>
-</div>
-
-<dialog id="groot" aria-label="Video groot">
-  <button type="button" class="sluit" id="sluit">Sluiten</button>
-  <video id="grootvid" controls playsinline loop></video>
-</dialog>
-
-<script>
-const ADS = [
- {g:'Renders', nr:1, f:'ad01-bouwt-zich-op', titel:'Stel je eigen hooiberg samen',
-  tekst:'Kies je maat, je deur, een ren en de kleur van het beslag. Je ziet je hooiberg bij elke keuze live veranderen.\n\nIn 2 minuten klaar, en je prijs krijg je direct.',
-  kop:'Stel je eigen hooiberg samen', knop:'Meer informatie',
-  waarom:'De configurator zelf is het product van deze campagne. Deze ad laat precies zien wat je daar doet: tikken en de hooiberg ziet er meteen anders uit.',
-  hoe:'Lagen uit de renders van de configurator (basis, deur, ren, beslag) over elkaar gelegd en per tik overgevloeid. Optiekaarten nagebouwd in de stijl van de configurator.',
-  hook:'Uit de configurator zelf: "Kies hieronder, je hooiberg verandert live mee" en "Klaar in 2 minuten".'},
- {g:'Renders', nr:2, f:'ad02-zoals-jij-wilt', titel:'Bouw hem zoals jij wilt',
-  tekst:'Een ren van 400 cm erbij? Dicht dak tegen de regen? Boerendeur en zwart beslag?\n\nStel je hooiberg samen in de configurator van Kippenvilla en zie meteen hoe hij eruitziet.',
-  kop:'Ontwerp je eigen hooiberg', knop:'Meer informatie',
-  waarom:'Andere opbouw dan ad 1: geen keuzescherm, maar de opties springen als labels bij de hooiberg. Sneller en voor wie al weet wat hij wil.',
-  hoe:'Hooiberg An uit de renders. Camera zoomt uit zodra de ren erbij komt. Labels in goud uit de huisstijl.',
-  hook:'Uit de meest gekozen opties in de configurator: ren ("Meest gekozen") en dicht dak ("beschermt tegen vogelgriep").'},
- {g:'Renders', nr:3, f:'ad03-welke-maat', titel:'Hoeveel kippen heb jij?',
-  tekst:'Vera, Jan of An? Hoeveel kippen je hebt bepaalt welke hooiberg past.\n\nVera: tot 10 leghennen\nJan: tot 16 leghennen\nAn: tot 20 leghennen\n\nKies je maat en stel hem daarna zelf samen.',
-  kop:'Welke hooiberg past bij jouw kippen?', knop:'Meer informatie',
-  waarom:'De eerste vraag die kopers zich stellen is welke maat. De configurator begint ook met die vraag.',
-  hoe:'De drie basismodellen uit de renders, op dezelfde schaal, zodat je het verschil echt ziet. Aantallen komen letterlijk uit de configurator.',
-  hook:'Stap 2 van de configurator: "Welk formaat past bij jou?" met de capaciteit per model.'},
- {g:'Renders', nr:4, f:'ad04-welke-maat', prijs:true, titel:'Hoeveel kippen heb jij? (met prijs)',
-  tekst:'Vera, Jan of An? Kies de hooiberg die past bij het aantal kippen dat je hebt.\n\nHooiberg Vera al vanaf € 2.829. Stel hem samen en je ziet direct wat jouw versie kost.',
-  kop:'Hooiberg vanaf € 2.829', knop:'Offerte aanvragen',
-  waarom:'De enige ad met een prijs. Een vanaf-prijs haalt mensen eruit die een hok van een paar honderd euro zoeken, zodat je minder betaalt voor verkeerde klikken.',
-  hoe:'Zelfde opbouw als ad 3, met andere knop ("Bekijk je prijs") en de vanaf-prijs onder de knop.',
-  hook:'Vanaf-prijs van Vera zoals die in de configurator staat (€ 2.829).'},
- {g:'Renders', nr:5, f:'ad05-galv-of-zwart', titel:'Gegalvaniseerd of zwart?',
-  tekst:'Gegalvaniseerd beslag en gaas, of alles in zwart?\n\nIn de configurator zie je het verschil meteen. Kies de uitvoering die bij je tuin past.',
-  kop:'Kies jouw uitvoering', knop:'Meer informatie',
-  waarom:'Voor de koper die het er mooi uit wil laten zien. Een schuifbalk is een bekend formaat dat mensen laat kijken tot het eind.',
-  hoe:'Twee renders van dezelfde hooiberg met ren (gegalvaniseerd en zwart) met een schuifbalk ertussen.',
-  hook:'Uit de configurator: "Zwart gecoat: chique zwarte afwerking die de stijl van je hooiberg compleet maakt".'},
- {g:'Renders', nr:6, f:'ad06-links-of-rechts', titel:'Ren links of rechts?',
-  tekst:'Past de ren beter links of rechts in je tuin? Wil je een open gaasdak of een dicht dak?\n\nProbeer het uit in de configurator. Je hooiberg verandert mee.',
-  kop:'Bekijk alle opties', knop:'Meer informatie',
-  waarom:'Mensen die twijfelen hoe het in hun tuin past. Laat zien dat je de opstelling zelf bepaalt.',
-  hoe:'Renders van An met ren van 400 cm, links en rechts, met gaasdak en dicht dak. Schakelaars nagebouwd.',
-  hook:'Uit de configurator: "Aan welke kant komt de ren?" en "Gratis keuze, kijk wat het beste past bij je tuin".'},
- {g:'Echte foto’s', nr:7, f:'ad07-ontwerp-naar-tuin', titel:'Van ontwerp naar tuin',
-  tekst:'Zo ontwerp je hem in de configurator. En zo staat hij bij een klant in de tuin.\n\nKlanten geven Kippenvilla een 9,5. Ontwerp de jouwe en ontvang direct je prijs.',
-  kop:'Zo staat hij in je tuin', knop:'Meer informatie',
-  waarom:'Een render alleen voelt abstract. Door hem te laten overgaan in een echte klantfoto zie je dat het ontwerp echt zo wordt.',
-  hoe:'Render van Jan met ren en zwart beslag, die met een veeg overgaat in een klantfoto van een zwarte hooiberg met ren.',
-  hook:'"Een 9,5 van klanten" staat bovenaan kippenvilla.nl.'},
- {g:'Echte foto’s', nr:8, f:'ad08-geen-hetzelfde', titel:'Geen hooiberg is hetzelfde',
-  tekst:'Zwart of blank, met of zonder ren, boerendeur of één deur. Bij Kippenvilla stel je je hooiberg zelf samen.\n\nWelke stel jij samen?',
-  kop:'Welke stel jij samen?', knop:'Meer informatie',
-  waarom:'Vier echte hooibergen bij klanten laten zien dat iedereen een eigen versie heeft. Daarna de vraag welke jij kiest.',
-  hoe:'Vier klantfoto\'s met langzame zoom, label per foto, daarna een render met de knop.',
-  hook:'Uit de best lopende Kippenvilla-ads (carrousels met verschillende hooibergen, CTR tot 5,5%).'},
- {g:'Configurator op de telefoon', nr:9, f:'ad09-telefoon', titel:'In 2 minuten je eigen hooiberg',
-  tekst:'Maat, deur, beslag, ren en dak: je kiest alles op je telefoon.\n\nAan het eind zie je hoe jouw hooiberg eruitziet en krijg je je prijs direct in je inbox.',
-  kop:'Je prijs direct in je inbox', knop:'Offerte aanvragen',
-  waarom:'Laat het echte scherm zien, zodat mensen weten wat ze kunnen verwachten als ze klikken. Dat verlaagt de drempel.',
-  hoe:'Schermafbeeldingen van de echte configurator op een telefoon (prijzen weggehaald), met een tik-animatie op de plek waar je echt tikt.',
-  hook:'De configurator zelf: "Klaar in 2 minuten" en "Je totaalprijs komt direct in je inbox".'},
- {g:'Configurator op de telefoon', nr:10, f:'ad10-drie-tikken', titel:'Drie tikken',
-  tekst:'Tik 1: welke maat. Tik 2: welke deur. Tik 3: ren erbij of niet.\n\nZo eenvoudig stel je bij Kippenvilla je hooiberg samen.',
-  kop:'Probeer de configurator', knop:'Meer informatie',
-  waarom:'Zelfde verhaal als ad 9, maar ingezoomd en met grote tekst. Werkt beter als iemand zonder geluid snel scrolt.',
-  hoe:'Uitsnedes van de echte configurator, ingezoomd per stap.',
-  hook:'Uit de stappen van de configurator.'},
- {g:'Eigen video', nr:11, f:'ad11-stop-motion', titel:'Zo bouwen wij een hooiberg',
-  tekst:'Van losse delen tot hooiberg met ren. Zo zetten we hem in elkaar.\n\nHoe ziet de jouwe eruit? Stel hem samen in de configurator.',
-  kop:'Hoe ziet de jouwe eruit?', knop:'Meer informatie',
-  waarom:'Beweging van echt materiaal stopt het scrollen. Een stop-motion laat in een paar seconden zien hoe groot en stevig hij is.',
-  hoe:'Stop-motion van het Kippenvilla-YouTubekanaal, iets versneld en bijgesneden, met eindbeeld.',
-  hook:'YouTube Kippenvilla: "Hooiberg bouwpakket: zet in 12 simpele stappen jouw kippenhok hooiberg met ren in elkaar".'},
- {g:'Eigen video', nr:12, f:'ad12-in-elkaar', titel:'Zo staat een hooiberg met ren',
-  tekst:'Van bouwpakket tot hooiberg met ren, in één timelapse.\n\nStel je eigen hooiberg samen in de configurator en je ontvangt direct je prijs.',
-  kop:'Stel de jouwe zelf samen', knop:'Offerte aanvragen',
-  waarom:'De opbouw-video\'s van Kippenvilla zijn de best bekeken video\'s op het kanaal. Dit haalt de angst weg dat het een groot karwei is.',
-  hoe:'Timelapse van de opbouw (YouTube), daarna een close-up en het eindbeeld van de hooiberg met ren.',
-  hook:'YouTube Kippenvilla: "Kippenhok Hooiberg Bouwpakket: zo zet je \'m in 18 minuten in elkaar" (22.000 weergaven).'},
-];
-
-let fmt = "45";
-try { const v = localStorage.getItem('kv-fmt'); if (v === '45' || v === '916') fmt = v; } catch (e) {}
-
-function el(tag, cls, txt){ const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
-
-function render(){
-  const main = document.getElementById('lijst'); main.textContent = '';
-  const TEST = [1, 4, 8];
-  const groepen = [
-    ['Testset', 'Deze drie gaan live voor de test: de configurator zelf (01), de vanaf-prijs (04) en echte klantfoto\'s (08). Zo test je drie verschillende invalshoeken tegen elkaar.', a => TEST.includes(a.nr)],
-    ['Reserve', 'Klaar om in te zetten als een van de testads wegvalt of na de test om te wisselen.', a => !TEST.includes(a.nr)]
-  ];
-  for (const [g, sub, filt] of groepen){
-    const sec = el('section', 'groep'); sec.append(el('h2', null, g), el('p', 'sub', sub));
-    const grid = el('div', 'grid');
-    for (const a of ADS.filter(filt)){
-      const card = el('article', 'ad');
-      const top = el('div', 'ad-top'); top.append(el('span', 'nr', 'AD ' + String(a.nr).padStart(2, '0')));
-      if (a.prijs) top.append(el('span', 'prijs', 'met prijs'));
-      card.append(top, el('h3', null, a.titel));
-      const ph = el('button', 'phone'); ph.type = 'button'; ph.setAttribute('aria-label', 'Bekijk ' + a.titel + ' groot');
-      const v = document.createElement('video'); v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.preload = 'metadata';
-      const badge = el('span', 'fmt');
-      ph.append(v, badge);
-      // formaatwissel per ad
-      const seg = el('div', 'seg'); seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', 'Formaat ' + a.titel);
-      const zet = f => {
-        const src = `video/${a.f}-${f}.mp4`;
-        v.src = src; ph.dataset.src = src; badge.textContent = f === '45' ? '4:5' : '9:16';
-        v.play().catch(() => {});
-        seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fmt === f)));
-      };
-      for (const [f, lab] of [['45', 'Feed 4:5'], ['916', 'Story 9:16']]){
-        const b = el('button', null, lab); b.type = 'button'; b.dataset.fmt = f;
-        b.addEventListener('click', () => zet(f)); seg.append(b);
-      }
-      card.append(seg, ph);
-      zet(fmt);
-      const meta = el('div', 'meta');
-      meta.append(el('span', 'lbl', 'Primaire tekst'), el('div', 'tekst', a.tekst), el('span', 'lbl', 'Kop'), el('div', 'kop', a.kop), el('span', 'lbl', 'Knop'), el('span', 'knop', a.knop));
-      card.append(meta);
-      const btn = el('button', 'uitleg-btn', 'Uitleg'); btn.type = 'button'; btn.setAttribute('aria-expanded', 'false');
-      const box = el('div', 'uitleg'); box.hidden = true;
-      for (const [k, t] of [['Waarom', a.waarom], ['Hoe gemaakt', a.hoe], ['Herkomst hook', a.hook]]){
-        const p = el('div'); p.append(el('b', null, k + ': '), document.createTextNode(t)); box.append(p);
-      }
-      btn.addEventListener('click', () => { box.hidden = !box.hidden; btn.setAttribute('aria-expanded', String(!box.hidden)); });
-      card.append(btn, box);
-      grid.append(card);
-    }
-    sec.append(grid); main.append(sec);
-  }
-}
-
-
-const dlg = document.getElementById('groot'), gv = document.getElementById('grootvid');
-document.getElementById('lijst').addEventListener('click', e => {
-  const ph = e.target.closest('.phone'); if (!ph) return;
-  gv.src = ph.dataset.src; gv.muted = false;
-  try { dlg.showModal(); } catch (err) { dlg.setAttribute('open', ''); }
-  gv.play().catch(() => {});
-});
-function sluit(){ gv.pause(); dlg.close(); }
-document.getElementById('sluit').addEventListener('click', sluit);
-dlg.addEventListener('click', e => { if (e.target === dlg) sluit(); });
-dlg.addEventListener('close', () => gv.pause());
-render();
-</script>
-
-</body>
-</html>
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kippenvilla · Meta-ads hooiberg-configurator</title><meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"><style>
+:root{color-scheme:light;--bg:#121212;--sun:#ae8c4c;--pink:#ae8c4c;--gold:#e0bd72;--ww:#f8f4ef;--ln:#e3ddd3;--zw:#094a60}
+*{box-sizing:border-box}html{overflow-anchor:none}
+body{margin:0;font-family:Poppins,system-ui,sans-serif;background:var(--ww);color:#3a3236;-webkit-font-smoothing:antialiased}
+.gutter{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1260px;margin:0 auto}
+header{background:var(--bg);color:#fff;padding-block:34px 28px}
+header img.lg{height:40px}
+h1{font-size:clamp(26px,4vw,40px);font-weight:800;margin:18px 0 8px;line-height:1.15;text-wrap:balance}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--sun),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{max-width:860px;line-height:1.6;margin:0 0 8px;color:#f1e4ea}
+.wat{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.wat span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:6px 12px;font-size:13px}
+nav.av{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ww);border-bottom:1px solid var(--ln);padding-block:10px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ww)}
+nav.av .wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;align-items:center}
+nav.av a{flex:none;font-size:14px;font-weight:600;color:var(--zw);text-decoration:none;border:1.5px solid var(--ln);background:#fff;padding:8px 14px;border-radius:999px;min-height:40px;display:flex;align-items:center}
+nav.av a:hover{border-color:var(--pink);color:var(--pink)}
+.flt{display:flex;gap:6px;flex:none;padding-right:10px;margin-right:4px;border-right:1px solid var(--ln)}
+.flt button{font:inherit;font-size:14px;font-weight:600;border:1.5px solid var(--zw);background:#fff;color:var(--zw);padding:8px 14px;border-radius:999px;min-height:40px;cursor:pointer;white-space:nowrap}
+.flt button.on{background:var(--zw);color:#fff}
+section{padding-block:34px 8px;scroll-margin-top:70px}
+h2{font-size:24px;font-weight:800;color:var(--zw);margin:0}
+h2 small{font-size:14px;font-weight:600;color:var(--pink);margin-left:8px}
+.uitleg{margin:6px 0 20px;max-width:860px;line-height:1.55}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:26px}
+.tg{display:flex;gap:6px;margin-bottom:8px}
+.tg button{font:inherit;font-size:13px;font-weight:600;border:1.5px solid var(--zw);background:transparent;color:var(--zw);padding:6px 14px;border-radius:999px;cursor:pointer;min-height:36px}
+.tg button.on{background:var(--zw);color:#fff}
+.post{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1c1e21}
+.kp{display:flex;gap:10px;align-items:center;padding:12px}
+.kp .av{width:36px;height:36px;border-radius:50%;object-fit:cover;background:#000}
+.kp b{display:block;font-size:14px}.kp span{font-size:12px;color:#65676b}
+.prim{font-size:14px;line-height:1.45;padding:0 12px 12px;margin:0}
+.media{position:relative;cursor:zoom-in}
+.media img,.media video{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;background:#eee}
+.media .s{display:none;aspect-ratio:9/16}
+.ad.story .media .f{display:none}.ad.story .media .s{display:block}
+.ad.story .prim,.ad.story .cta{display:none}
+.media:after{content:"⤢ Bekijk groot";position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.62);color:#fff;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;pointer-events:none}
+.nrb{position:absolute;left:10px;top:10px;z-index:2;min-width:44px;height:44px;padding:0 10px;border-radius:999px;background:var(--gold);color:var(--zw);font:800 22px Poppins,sans-serif;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.vtag{position:absolute;right:10px;top:10px;background:rgba(0,0,0,.62);color:#fff;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;background:#f0f2f5}
+.cta small{font-size:11px;color:#65676b;display:block}.cta b{font-size:15px;display:block}.cta span{font-size:13px;color:#65676b}
+.cta a{flex:none;background:#e4e6eb;border-radius:6px;padding:8px 14px;font-weight:600;font-size:14px}
+.meta{font-size:13px;margin:8px 0 0;line-height:1.5}.meta b{color:var(--pink)}.meta a{color:var(--zw)}
+.eg{background:#E9EEF8;color:#2b4a8a;font-weight:700;font-size:11px;padding:2px 8px;border-radius:4px}
+.nw{background:var(--zw);color:var(--gold);font-weight:700;font-size:11px;padding:2px 8px;border-radius:4px}
+details.ul{margin-top:8px;background:#fff;border:1px solid var(--ln);border-radius:10px;font-size:13px;line-height:1.5}
+details.ul summary{cursor:pointer;padding:10px 12px;font-weight:600;color:var(--zw);list-style:none;min-height:40px;display:flex;align-items:center;gap:8px}
+details.ul summary::-webkit-details-marker{display:none}
+details.ul summary:before{content:"+";width:20px;height:20px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+details.ul[open] summary:before{content:"−"}
+details.ul dl{margin:0;padding:0 12px 12px}details.ul dt{font-weight:700;color:var(--zw);margin-top:8px}details.ul dd{margin:2px 0 0}
+.hk-avatar,.hk-eigen{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:4px;margin-right:4px}
+.hk-avatar,.hk-nestera{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:4px;margin-right:4px}.hk-avatar{background:#E8F3EC;color:#1f6b3f}.hk-eigen{background:#FFF0E3;color:#a24b00}.hk-nestera{background:#E9EEF8;color:#2b4a8a}
+#lb{position:fixed;inset:0;z-index:50;background:rgba(10,6,8,.92);display:none;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px))}
+#lb.open{display:flex}
+#lb .box{position:relative;max-width:min(100%,560px);max-height:100%;display:flex;flex-direction:column;gap:10px}
+#lb video,#lb img{display:block;max-width:100%;max-height:calc(100vh - 110px);border-radius:10px;background:#000;margin:0 auto}
+#lb .bar{display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:13px;gap:8px}#lb .bar>span:last-child{display:flex;gap:6px;flex:none}
+#lb button{font:inherit;font-size:13px;font-weight:600;border:0;border-radius:999px;padding:8px 14px;white-space:nowrap;min-height:44px;cursor:pointer;background:#fff;color:var(--zw)}
+#lb button.or{background:var(--pink);color:#fff}
+.ad.uit,section.leeg,nav.av a.leeg{display:none}
+footer{padding-block:40px 60px;font-size:13px;line-height:1.6}footer ul{padding-left:18px}
+</style></head><body>
+<header class="gutter"><div class="wrap"><img class="lg" src="logo.png" alt="Kippenvilla" style="border-radius:8px">
+<h1>Meta-ads hooiberg-<em>configurator</em></h1>
+<p>12 video-ads die mensen naar <b>kippenvilla.nl/pages/hooiberg-configurator</b> sturen. Elke ad draait om <b>zelf samenstellen</b>: maat, deur, ren, gaas en beslag kiezen en direct je prijs zien. Het beeld komt uit de renders van de configurator, echte klantfoto's en eigen YouTube-video's van Kippenvilla. Geen AI-beeld en geen voice-over.</p>
+<p>Klik per ad op <b>Feed</b> of <b>Story</b>. <b>Klik op de ad</b> om hem groot te openen. Onder elke ad staat <b>Uitleg</b>.</p>
+<div class="wat"><span>12 video-ads</span><span>Testset: 1, 4, 8 en 11</span><span>8 reserve</span><span>14 tot 16 seconden</span><span>Prijs in 1 ad</span><span>Feed 1080×1350 + Story 1080×1920</span></div>
+</div></header>
+<nav class="av gutter"><div class="wrap"><span class="flt"><button class="on" data-ab="alle">Alle 12</button><button data-ab="g0">Renders 6</button><button data-ab="g1">Echte foto’s 2</button><button data-ab="g2">Configurator op de telefoon 2</button><button data-ab="g3">Eigen video 2</button></span><a href="#test">Testset</a><a href="#reserve">Reserve</a></div></nav>
+<section class="gutter" id="test"><div class="wrap"><h2>Testset<small class="cnt">4 ads</small></h2><p class="uitleg">Deze vier gaan live voor de test: de configurator zelf (1), de vanaf-prijs (4), echte klantfoto&#x27;s (8) en de stop-motion van de opbouw (11). Zo test je vier verschillende invalshoeken tegen elkaar.</p><div class="grid"><article class="ad" data-ab="g0"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Kies je maat, je deur, een ren en de kleur van het beslag. Je ziet je hooiberg bij elke keuze live veranderen.<br><br>In 2 minuten klaar, en je prijs krijg je direct.</p>
+ <div class="media"><video class="f" src="video/ad01-bouwt-zich-op-45.mp4" poster="video/ad01-bouwt-zich-op-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad01-bouwt-zich-op-916.mp4" poster="video/ad01-bouwt-zich-op-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">1</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Stel je eigen hooiberg samen</b><span>Je prijs direct in beeld</span></div><a>Meer informatie</a></div>
+</div><p class="meta"><b>Ad 1</b> · Renders · <span class="nw">Testset</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>De configurator zelf is het product van deze campagne. Deze ad laat precies zien wat je daar doet: tikken en de hooiberg ziet er meteen anders uit.</dd>
+<dt>Hoe gemaakt</dt><dd>Lagen uit de renders van de configurator (basis, deur, ren, beslag) over elkaar gelegd en per tik overgevloeid. Optiekaarten nagebouwd in de stijl van de configurator.</dd>
+<dt>Herkomst hook</dt><dd>Uit de configurator zelf: &quot;Kies hieronder, je hooiberg verandert live mee&quot; en &quot;Klaar in 2 minuten&quot;.</dd>
+</dl></details></article><article class="ad" data-ab="g0"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Vera, Jan of An? Kies de hooiberg die past bij het aantal kippen dat je hebt.<br><br>Hooiberg Vera al vanaf € 2.829. Stel hem samen en je ziet direct wat jouw versie kost.</p>
+ <div class="media"><video class="f" src="video/ad04-welke-maat-45.mp4" poster="video/ad04-welke-maat-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad04-welke-maat-916.mp4" poster="video/ad04-welke-maat-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">4</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Hooiberg vanaf € 2.829</b><span>Je prijs direct in beeld</span></div><a>Offerte aanvragen</a></div>
+</div><p class="meta"><b>Ad 4</b> · Renders · <span class="nw">Testset</span> · <span class="nw">Met prijs</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>De enige ad met een prijs. Een vanaf-prijs haalt mensen eruit die een hok van een paar honderd euro zoeken, zodat je minder betaalt voor verkeerde klikken.</dd>
+<dt>Hoe gemaakt</dt><dd>Zelfde opbouw als ad 3, met andere knop (&quot;Bekijk je prijs&quot;) en de vanaf-prijs onder de knop.</dd>
+<dt>Herkomst hook</dt><dd>Vanaf-prijs van Vera zoals die in de configurator staat (€ 2.829).</dd>
+</dl></details></article><article class="ad" data-ab="g1"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Zwart of blank, met of zonder ren, boerendeur of één deur. Bij Kippenvilla stel je je hooiberg zelf samen.<br><br>Welke stel jij samen?</p>
+ <div class="media"><video class="f" src="video/ad08-geen-hetzelfde-45.mp4" poster="video/ad08-geen-hetzelfde-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad08-geen-hetzelfde-916.mp4" poster="video/ad08-geen-hetzelfde-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">8</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Welke stel jij samen?</b><span>Je prijs direct in beeld</span></div><a>Meer informatie</a></div>
+</div><p class="meta"><b>Ad 8</b> · Echte foto’s · <span class="nw">Testset</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>Vier echte hooibergen bij klanten laten zien dat iedereen een eigen versie heeft. Daarna de vraag welke jij kiest.</dd>
+<dt>Hoe gemaakt</dt><dd>Vier klantfoto&#x27;s met langzame zoom, label per foto, daarna een render met de knop.</dd>
+<dt>Herkomst hook</dt><dd>Uit de best lopende Kippenvilla-ads (carrousels met verschillende hooibergen, CTR tot 5,5%).</dd>
+</dl></details></article><article class="ad" data-ab="g3"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Van losse delen tot hooiberg met ren. Zo zetten we hem in elkaar.<br><br>Hoe ziet de jouwe eruit? Stel hem samen in de configurator.</p>
+ <div class="media"><video class="f" src="video/ad11-stop-motion-45.mp4" poster="video/ad11-stop-motion-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad11-stop-motion-916.mp4" poster="video/ad11-stop-motion-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">11</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Hoe ziet de jouwe eruit?</b><span>Je prijs direct in beeld</span></div><a>Meer informatie</a></div>
+</div><p class="meta"><b>Ad 11</b> · Eigen video · <span class="nw">Testset</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>Beweging van echt materiaal stopt het scrollen. Een stop-motion laat in een paar seconden zien hoe groot en stevig hij is.</dd>
+<dt>Hoe gemaakt</dt><dd>Stop-motion van het Kippenvilla-YouTubekanaal, iets versneld en bijgesneden, met eindbeeld.</dd>
+<dt>Herkomst hook</dt><dd>YouTube Kippenvilla: &quot;Hooiberg bouwpakket: zet in 12 simpele stappen jouw kippenhok hooiberg met ren in elkaar&quot;.</dd>
+</dl></details></article></div></div></section><section class="gutter" id="reserve"><div class="wrap"><h2>Reserve<small class="cnt">8 ads</small></h2><p class="uitleg">Klaar om in te zetten als een van de testads wegvalt, of om na de test mee te wisselen.</p><div class="grid"><article class="ad" data-ab="g0"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Een ren van 400 cm erbij? Dicht dak tegen de regen? Boerendeur en zwart beslag?<br><br>Stel je hooiberg samen in de configurator van Kippenvilla en zie meteen hoe hij eruitziet.</p>
+ <div class="media"><video class="f" src="video/ad02-zoals-jij-wilt-45.mp4" poster="video/ad02-zoals-jij-wilt-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad02-zoals-jij-wilt-916.mp4" poster="video/ad02-zoals-jij-wilt-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">2</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Ontwerp je eigen hooiberg</b><span>Je prijs direct in beeld</span></div><a>Meer informatie</a></div>
+</div><p class="meta"><b>Ad 2</b> · Renders · <span class="eg">Reserve</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>Andere opbouw dan ad 1: geen keuzescherm, maar de opties springen als labels bij de hooiberg. Sneller en voor wie al weet wat hij wil.</dd>
+<dt>Hoe gemaakt</dt><dd>Hooiberg An uit de renders. Camera zoomt uit zodra de ren erbij komt. Labels in goud uit de huisstijl.</dd>
+<dt>Herkomst hook</dt><dd>Uit de meest gekozen opties in de configurator: ren (&quot;Meest gekozen&quot;) en dicht dak (&quot;beschermt tegen vogelgriep&quot;).</dd>
+</dl></details></article><article class="ad" data-ab="g0"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Vera, Jan of An? Hoeveel kippen je hebt bepaalt welke hooiberg past.<br><br>Vera: tot 10 leghennen<br>Jan: tot 16 leghennen<br>An: tot 20 leghennen<br><br>Kies je maat en stel hem daarna zelf samen.</p>
+ <div class="media"><video class="f" src="video/ad03-welke-maat-45.mp4" poster="video/ad03-welke-maat-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad03-welke-maat-916.mp4" poster="video/ad03-welke-maat-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">3</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Welke hooiberg past bij jouw kippen?</b><span>Je prijs direct in beeld</span></div><a>Meer informatie</a></div>
+</div><p class="meta"><b>Ad 3</b> · Renders · <span class="eg">Reserve</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>De eerste vraag die kopers zich stellen is welke maat. De configurator begint ook met die vraag.</dd>
+<dt>Hoe gemaakt</dt><dd>De drie basismodellen uit de renders, op dezelfde schaal, zodat je het verschil echt ziet. Aantallen komen letterlijk uit de configurator.</dd>
+<dt>Herkomst hook</dt><dd>Stap 2 van de configurator: &quot;Welk formaat past bij jou?&quot; met de capaciteit per model.</dd>
+</dl></details></article><article class="ad" data-ab="g0"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Gegalvaniseerd beslag en gaas, of alles in zwart?<br><br>In de configurator zie je het verschil meteen. Kies de uitvoering die bij je tuin past.</p>
+ <div class="media"><video class="f" src="video/ad05-galv-of-zwart-45.mp4" poster="video/ad05-galv-of-zwart-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad05-galv-of-zwart-916.mp4" poster="video/ad05-galv-of-zwart-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">5</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Kies jouw uitvoering</b><span>Je prijs direct in beeld</span></div><a>Meer informatie</a></div>
+</div><p class="meta"><b>Ad 5</b> · Renders · <span class="eg">Reserve</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>Voor de koper die het er mooi uit wil laten zien. Een schuifbalk is een bekend formaat dat mensen laat kijken tot het eind.</dd>
+<dt>Hoe gemaakt</dt><dd>Twee renders van dezelfde hooiberg met ren (gegalvaniseerd en zwart) met een schuifbalk ertussen.</dd>
+<dt>Herkomst hook</dt><dd>Uit de configurator: &quot;Zwart gecoat: chique zwarte afwerking die de stijl van je hooiberg compleet maakt&quot;.</dd>
+</dl></details></article><article class="ad" data-ab="g0"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Past de ren beter links of rechts in je tuin? Wil je een open gaasdak of een dicht dak?<br><br>Probeer het uit in de configurator. Je hooiberg verandert mee.</p>
+ <div class="media"><video class="f" src="video/ad06-links-of-rechts-45.mp4" poster="video/ad06-links-of-rechts-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad06-links-of-rechts-916.mp4" poster="video/ad06-links-of-rechts-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">6</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Bekijk alle opties</b><span>Je prijs direct in beeld</span></div><a>Meer informatie</a></div>
+</div><p class="meta"><b>Ad 6</b> · Renders · <span class="eg">Reserve</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>Mensen die twijfelen hoe het in hun tuin past. Laat zien dat je de opstelling zelf bepaalt.</dd>
+<dt>Hoe gemaakt</dt><dd>Renders van An met ren van 400 cm, links en rechts, met gaasdak en dicht dak. Schakelaars nagebouwd.</dd>
+<dt>Herkomst hook</dt><dd>Uit de configurator: &quot;Aan welke kant komt de ren?&quot; en &quot;Gratis keuze, kijk wat het beste past bij je tuin&quot;.</dd>
+</dl></details></article><article class="ad" data-ab="g1"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Zo ontwerp je hem in de configurator. En zo staat hij bij een klant in de tuin.<br><br>Klanten geven Kippenvilla een 9,5. Ontwerp de jouwe en ontvang direct je prijs.</p>
+ <div class="media"><video class="f" src="video/ad07-ontwerp-naar-tuin-45.mp4" poster="video/ad07-ontwerp-naar-tuin-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad07-ontwerp-naar-tuin-916.mp4" poster="video/ad07-ontwerp-naar-tuin-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">7</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Zo staat hij in je tuin</b><span>Je prijs direct in beeld</span></div><a>Meer informatie</a></div>
+</div><p class="meta"><b>Ad 7</b> · Echte foto’s · <span class="eg">Reserve</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>Een render alleen voelt abstract. Door hem te laten overgaan in een echte klantfoto zie je dat het ontwerp echt zo wordt.</dd>
+<dt>Hoe gemaakt</dt><dd>Render van Jan met ren en zwart beslag, die met een veeg overgaat in een klantfoto van een zwarte hooiberg met ren.</dd>
+<dt>Herkomst hook</dt><dd>&quot;Een 9,5 van klanten&quot; staat bovenaan kippenvilla.nl.</dd>
+</dl></details></article><article class="ad" data-ab="g2"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Maat, deur, beslag, ren en dak: je kiest alles op je telefoon.<br><br>Aan het eind zie je hoe jouw hooiberg eruitziet en krijg je je prijs direct in je inbox.</p>
+ <div class="media"><video class="f" src="video/ad09-telefoon-45.mp4" poster="video/ad09-telefoon-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad09-telefoon-916.mp4" poster="video/ad09-telefoon-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">9</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Je prijs direct in je inbox</b><span>Je prijs direct in beeld</span></div><a>Offerte aanvragen</a></div>
+</div><p class="meta"><b>Ad 9</b> · Configurator op de telefoon · <span class="eg">Reserve</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>Laat het echte scherm zien, zodat mensen weten wat ze kunnen verwachten als ze klikken. Dat verlaagt de drempel.</dd>
+<dt>Hoe gemaakt</dt><dd>Schermafbeeldingen van de echte configurator op een telefoon (prijzen weggehaald), met een tik-animatie op de plek waar je echt tikt.</dd>
+<dt>Herkomst hook</dt><dd>De configurator zelf: &quot;Klaar in 2 minuten&quot; en &quot;Je totaalprijs komt direct in je inbox&quot;.</dd>
+</dl></details></article><article class="ad" data-ab="g2"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Tik 1: welke maat. Tik 2: welke deur. Tik 3: ren erbij of niet.<br><br>Zo eenvoudig stel je bij Kippenvilla je hooiberg samen.</p>
+ <div class="media"><video class="f" src="video/ad10-drie-tikken-45.mp4" poster="video/ad10-drie-tikken-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad10-drie-tikken-916.mp4" poster="video/ad10-drie-tikken-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">10</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Probeer de configurator</b><span>Je prijs direct in beeld</span></div><a>Meer informatie</a></div>
+</div><p class="meta"><b>Ad 10</b> · Configurator op de telefoon · <span class="eg">Reserve</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>Zelfde verhaal als ad 9, maar ingezoomd en met grote tekst. Werkt beter als iemand zonder geluid snel scrolt.</dd>
+<dt>Hoe gemaakt</dt><dd>Uitsnedes van de echte configurator, ingezoomd per stap.</dd>
+<dt>Herkomst hook</dt><dd>Uit de stappen van de configurator.</dd>
+</dl></details></article><article class="ad" data-ab="g3"><div class="tg"><button class="on" data-f="f">Feed</button><button data-f="s">Story</button></div><div class="post">
+ <div class="kp"><img class="av" src="icoon.png" alt=""><div><b>Kippenvilla</b><span>Gesponsord</span></div></div>
+ <p class="prim">Van bouwpakket tot hooiberg met ren, in één timelapse.<br><br>Stel je eigen hooiberg samen in de configurator en je ontvangt direct je prijs.</p>
+ <div class="media"><video class="f" src="video/ad12-in-elkaar-45.mp4" poster="video/ad12-in-elkaar-45.jpg" muted loop playsinline preload="none"></video><video class="s" src="video/ad12-in-elkaar-916.mp4" poster="video/ad12-in-elkaar-916.jpg" muted loop playsinline preload="none"></video><span class="vtag">▶ Video</span><span class="nrb">12</span></div>
+ <div class="cta"><div><small>KIPPENVILLA.NL</small><b>Stel de jouwe zelf samen</b><span>Je prijs direct in beeld</span></div><a>Offerte aanvragen</a></div>
+</div><p class="meta"><b>Ad 12</b> · Eigen video · <span class="eg">Reserve</span> · landt op <a href="https://kippenvilla.nl/pages/hooiberg-configurator" target="_blank" rel="noopener">de hooiberg-configurator</a></p>
+<details class="ul"><summary>Uitleg: waarom deze ad?</summary><dl>
+<dt>Waarom deze ad</dt><dd>De opbouw-video&#x27;s van Kippenvilla zijn de best bekeken video&#x27;s op het kanaal. Dit haalt de angst weg dat het een groot karwei is.</dd>
+<dt>Hoe gemaakt</dt><dd>Timelapse van de opbouw (YouTube), daarna een close-up en het eindbeeld van de hooiberg met ren.</dd>
+<dt>Herkomst hook</dt><dd>YouTube Kippenvilla: &quot;Kippenhok Hooiberg Bouwpakket: zo zet je &#x27;m in 18 minuten in elkaar&quot; (22.000 weergaven).</dd>
+</dl></details></article></div></div></section>
+<footer class="gutter"><div class="wrap"><b>Goed om te weten</b><ul>
+<li>De video's hebben een stil geluidsspoor: kies in Meta Ads Manager een nummer uit de muziekbibliotheek van Meta.</li>
+<li>Ad 4 is de enige met een prijs ("vanaf € 2.829", de prijs van Vera in de configurator). Op de schermopnames van de configurator (ad 9 en 10) zijn de optieprijzen weggehaald.</li>
+<li>Bij het aanmaken in Ads Manager: "Advertenties van meerdere adverteerders" uit en budget per advertentieset (ABO).</li></ul></div></footer>
+<div id="lb" role="dialog" aria-modal="true"><div class="box"><div class="bar"><span class="t"></span><span><button class="sw or"></button> <button class="x">Sluiten ✕</button></span></div><div class="m"></div></div></div><script>
+var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting&&v.offsetParent){v.play().catch(function(){});}else{v.pause();}});},{rootMargin:'100px'});
+document.querySelectorAll('.media video').forEach(function(v){io.observe(v);});
+document.querySelectorAll('.tg').forEach(function(t){t.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;var ad=t.closest('.ad');
+ t.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});ad.classList.toggle('story',b.dataset.f==='s');
+ ad.querySelectorAll('video').forEach(function(v){v.pause();io.unobserve(v);io.observe(v);});});});
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+var lb=document.getElementById('lb'),lbm=lb.querySelector('.m'),lbt=lb.querySelector('.t'),lbs=lb.querySelector('.sw');var cur=null,curF='f';
+function toon(ad,f){cur=ad;curF=f;var el=ad.querySelector('.media .'+f);var n=ad.querySelector('.meta b').textContent;lbm.innerHTML='';
+ if(el.tagName==='VIDEO'){var v=document.createElement('video');v.src=el.getAttribute('src');v.controls=true;v.playsInline=true;v.loop=true;lbm.appendChild(v);v.play().catch(function(){});}
+ else{var i=document.createElement('img');i.src=el.getAttribute('src');lbm.appendChild(i);}
+ lbt.textContent=n+' · '+(f==='f'?'Feed 4:5':'Story 9:16');lbs.textContent=f==='f'?'Bekijk als story':'Bekijk als feed';
+ document.querySelectorAll('.media video').forEach(function(x){x.pause();});lb.classList.add('open');}
+function sluit(){lb.classList.remove('open');lbm.innerHTML='';}
+document.querySelectorAll('.media').forEach(function(m){m.addEventListener('click',function(){var ad=m.closest('.ad');toon(ad,ad.classList.contains('story')?'s':'f');});});
+lb.querySelector('.x').addEventListener('click',sluit);lbs.addEventListener('click',function(){toon(cur,curF==='f'?'s':'f');});
+lb.addEventListener('click',function(e){if(e.target===lb)sluit();});document.addEventListener('keydown',function(e){if(e.key==='Escape')sluit();});
+function filter(ab){document.querySelectorAll('.flt button').forEach(function(b){b.classList.toggle('on',b.dataset.ab===ab);});
+ document.querySelectorAll('.ad').forEach(function(a){var uit=ab!=='alle'&&a.dataset.ab!==ab;a.classList.toggle('uit',uit);if(uit)a.querySelectorAll('video').forEach(function(v){v.pause();});});
+ document.querySelectorAll('section[id]').forEach(function(s){var n=s.querySelectorAll('.ad:not(.uit)').length,c=s.querySelector('.cnt');if(c)c.textContent=n+' ads';s.classList.toggle('leeg',n===0);
+  var l=document.querySelector('nav.av a[href="#'+s.id+'"]');if(l)l.classList.toggle('leeg',n===0);});}
+document.querySelector('.flt').addEventListener('click',function(e){var b=e.target.closest('button');if(b)filter(b.dataset.ab);});
+</script></body></html>
